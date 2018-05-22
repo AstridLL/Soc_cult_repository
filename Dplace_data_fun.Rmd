@@ -1,0 +1,46 @@
+---
+title: "Language_culture_databases"
+author: "Astrid L."
+date: "20/4/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+getwd()
+locpath= getwd()
+setwd(locpath)
+
+library(pacman)
+p_load(rethinking, ggplot2)
+
+d = read.csv("d_place_social_data.csv", header = TRUE, skip = 1)
+# skips the first row of the dataset which is a ref to D-place
+
+length(unique(d$Description..B031.Type.of.social.class.distinction))
+
+model = lmer(Description..B031.Type.of.social.class.distinction ~ 1 + Description..B037.Ownership.of.resource.locations + (1|References..B037.Ownership.of.resource.locations + References..B031.Type.of.social.class.distinction) , d, family = binomial) 
+summary(diagnosis_model)
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

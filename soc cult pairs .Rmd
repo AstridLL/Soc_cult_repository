@@ -1,0 +1,70 @@
+---
+title: "soc cult pairs"
+author: "Astrid L."
+date: "16/3/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+WORDS_1 <- read.csv("~/Desktop/4. semester/Soc_Cult/Soc_cult_repository/WORDS_1.csv")
+WORDS_9 <- read.csv("~/Desktop/4. semester/Soc_Cult/Soc_cult_repository/WORDS_9.csv")
+
+```
+
+scrabble task 
+1. round: individual
+2. round: pairs
+3. round: individual 
+
+changes? 
+parameters:
+- time
+- no. of words
+- word similarity
+- strategy (foraging patterns)
+
+group members
+diverse, but still some similarity 
+is it good to be mostly similar or diverse? 
+- dependent on task
+- what is it that we want to measure 
+- no of different(!) words - high number- very different words, low difference - very similar words. 
+
+group performance
+- look at the benefit (not the actual "product"?)
+- this experiment: highest no of words as baseline (alternatively: use the joined/added/merged participants words as baseline. the added group performance -> nomial groups?) 
+- 
+
+How to check for cognitive diversity? 
+- total number of different words created
+- strategy (e.g. number of non-words as a strategy to lighten cognitive load - new combinations)
+
+
+- cognitive diversity
+- performance similarity 
+
+other experiments
+- shared (working memory) vs. individual based on cognitive strategy (make up a story, repetition, etc.)
+- game theory (play against computer, primed by strategy, play together with person that has either same or different priming - see how it affects performance)
+- cogwheel game - they have been running an experiment where they did something alike. The pilot showed that a version where you first do 10 trials indivdidually (develop expertise) and then go together with another for 10 other results in a better performance than if you just are together from the start in all 20 trials. Then you are more primed by the partners strategy from the beginning. 
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

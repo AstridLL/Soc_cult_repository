@@ -1,0 +1,55 @@
+---
+title: "Imitation_inhibition_exp"
+author: "Astrid L."
+date: "16/2/2018"
+output: html_document
+---
+
+Imitation-inhibition experiment 
+```{r}
+
+getwd()
+locpath= getwd()
+setwd(locpath)
+
+library(pacman)
+p_load(plyr, dplyr, stringr, tidyverse, tidyr, ggplot2, pastecs, lmerTest, MuMIn, lme4, modelr, Metrics, caret, ddalpha, ggplot2, pastecs, crqa, lmerTest, pROC, modelr) # choose n (y/n?) in ddalpha
+
+data <- read.csv("~/Desktop/4. semester/Soc_Cult/imitation_inhibition_data.csv")
+```
+
+1) hypothesis
+2) plot
+3) analysis
+
+Hypothesis:
+We hypothsize that RT’s are shorter when there is congruency between image and task (maybe: also less errors)
+
+accuracy (acc) > congr
+RT< congr
+
+```{r cars}
+correctnessframe = data %>%
+  group_by(Participant, Congruity, Order_number) %>%
+  dplyr::summarise(Number_correct = sum(Correctness)totalN = n)
+```
+
+We want to remove RT's that aren't possible (negatives and too small)
+<RT<
+300 miliseconds is what books recommend that is the fastest we can react
+Riccardo said sometimes use 200 (check within participant, did an experiment where they removed the lower 25% of RTs)
+2 s max 
+
+a study like this could be a good exmample of a study where it could be a good idea to run a pilot to set these fixed values for min and max RT's etc. 
+
+
+```{r pressure, echo=FALSE}
+# does congruenty affect answer?
+ggplot(data, aes(Congruity, as.numeric(Correctness)geom_bar())
+
+# linking this to RT's we can see that people are slower when there IS congruency 
+       
+       
+```
+
+
