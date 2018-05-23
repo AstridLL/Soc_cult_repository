@@ -86,6 +86,7 @@ df$df.d.player.team = as.numeric(df$df.d.player.team)
 
 library(tidyverse)
 library(dplyr)
+library(plyr)
 
 # variables should be factors to function in ggplot
 df$df.d.between_group_play = as.factor(df$df.d.between_group_play)
@@ -370,17 +371,17 @@ df_5$Team = as.numeric(df_5$Team)
 
 m5 <- map2stan( 
 alist(
-  AcceptanceRate ~ dbinom( 26 , p ) , 
-  logit(p) <- ai + a[ID] + ab[GroupNumber] + bA*Team,
+  AcceptanceRate ~ dbinom( 1 , p ) , 
+  logit(p) <- ai + aii[ID] + aiii[GroupNumber] + bA*Team,
   ai ~ dnorm(0,1),
-  a[ID] ~ dnorm(0,1),
-  ab[GroupNumber] ~ dnorm(0,1), 
+  aii[ID] ~ dnorm(0,1),
+  aiii[GroupNumber] ~ dnorm(0,1), 
   bA ~ dnorm(0, 0.2),
   sigma ~ dunif(0,3)
  ), 
 data=df_5 , chains=2 , cores = 2, iter= 5000 , warmup=2000)
 precis(m5)
-precis(m5, depth = 2)
+#precis(m5, depth = 2)
 
 devtools::install_github("rmcelreath/rethinking", force = TRUE)
 #pairs(m5)
@@ -399,12 +400,12 @@ df_6$BetweenGroup = as.numeric(df_6$BetweenGroup)
 
 m6 <- map2stan( 
 alist(
-  AcceptanceRate ~ dbinom( 26 , p ) , 
-  logit(p) <- ai + a[ID] + ab[GroupNumber] + bp*BetweenGroup,
+  AcceptanceRate ~ dbinom( 1 , p ) , 
+  logit(p) <- ai + aii[ID] + aiii[GroupNumber] + bB*BetweenGroup,
   ai ~ dnorm(0,1),
-  a[ID] ~ dnorm(0,1),
-  ab[GroupNumber] ~ dnorm(0,1), 
-  bp ~ dnorm(0, 0.2),
+  aii[ID] ~ dnorm(0,1),
+  aiii[GroupNumber] ~ dnorm(0,1), 
+  bB ~ dnorm(0, 0.2),
   sigma ~ dunif(0,3)
  ), 
 data=df_6 , chains=2 , cores = 2, iter= 5000 , warmup=2000)
@@ -447,13 +448,13 @@ df_7$Team = as.numeric(df_7$Team)
 
 m7 <- map2stan( 
 alist(
-  AcceptanceRate ~ dbinom( 26 , p ) , 
-  logit(p) <- ai + a[ID] + ab[GroupNumber] + bp*BetweenGroup + bq*Team,
+  AcceptanceRate ~ dbinom( 1 , p ) , 
+  logit(p) <- ai + aii[ID] + aiii[GroupNumber] + bB*BetweenGroup + bA*Team,
   ai ~ dnorm(0,1),
-  a[ID] ~ dnorm(0,1),
-  ab[GroupNumber] ~ dnorm(0,1), 
-  bp ~ dnorm(0, 0.2),
-  bq ~ dnorm(0, 0.2),
+  aii[ID] ~ dnorm(0,1),
+  aiii[GroupNumber] ~ dnorm(0,1), 
+  bB ~ dnorm(0, 0.2),
+  bA ~ dnorm(0, 0.2),
   sigma ~ dunif(0,3)
  ), 
 data=df_7 , chains=2 , cores = 2, iter= 5000 , warmup=2000)
@@ -475,17 +476,18 @@ df_8$Team = as.numeric(df_8$Team)
 
 m8 <- map2stan( 
 alist(
-  AcceptanceRate ~ dbinom( 26 , p ) , 
-  logit(p) <- ai + a[ID] + ab[GroupNumber] + bp*BetweenGroup + bq*Team + br*Team*BetweenGroup,
+  AcceptanceRate ~ dbinom( 1 , p ) , 
+  logit(p) <- ai + aii[ID] + aiii[GroupNumber] + bB*BetweenGroup + bA*Team + bAB*Team*BetweenGroup,
   ai ~ dnorm(0,1),
-  a[ID] ~ dnorm(0,1),
-  ab[GroupNumber] ~ dnorm(0,1), 
-  bp ~ dnorm(0, 0.2),
-  bq ~ dnorm(0, 0.2),
-  br ~ dnorm(0, 0.2),
+  aii[ID] ~ dnorm(0,1),
+  aiii[GroupNumber] ~ dnorm(0,1), 
+  bB ~ dnorm(0, 0.2),
+  bA ~ dnorm(0, 0.2),
+  bAB ~ dnorm(0, 0.2),
   sigma ~ dunif(0,3)
  ), 
 data=df_8 , chains=2 , cores = 2, iter= 5000 , warmup=2000)
+
 
 precis(m8)
 precis(m8, depth = 2)
@@ -504,6 +506,14 @@ plot(compare(m5, m6, m7, m8))
 
 # coeftab plot 
 plot(coeftab(m5, m6, m7, m8))
+
+#?coeftab_plot - the way to do it without rethinking) 
+beta <- coeftab(m5, m6, m7, m8)
+pars <- c("ai", "aii", "aiii", "bA", "bB", "bAB", "sigma")
+
+coeftab_plot(beta, NULL , pars, col.ci="rosybrown4", by.model=FALSE, prob=0.89)
+
+coeftab_plot(beta, NULL, col.ci="rosybrown4", by.model=FALSE, prob=0.89)
 
 
 ```
